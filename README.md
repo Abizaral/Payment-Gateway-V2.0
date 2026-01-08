@@ -8,7 +8,7 @@
   </p>
 
   <p>
-    <a href="https://github.com/username-kamu/nama-repo-kamu">
+    <a href="https://github.com/Abizaral/Payment-Gateway-V2.0.git">
       <img src="https://img.shields.io/badge/Version-2.0-cyan?style=for-the-badge&logo=rocket" alt="Version">
     </a>
     <a href="https://github.com/username-kamu/nama-repo-kamu/blob/main/LICENSE">
