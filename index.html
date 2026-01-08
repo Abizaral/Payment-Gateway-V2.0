@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaizen Pay | Official Payment</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+        
+        body { 
+            font-family: 'Outfit', sans-serif; 
+            background-color: #050505; 
+            color: white; 
+            overflow-x: hidden;
+        }
+
+        /* --- BACKGROUND BARU: ANIMATED GRID --- */
+        .bg-grid {
+            background-size: 50px 50px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+            -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: float 10s infinite ease-in-out;
+        }
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(20px, -20px); }
+        }
+
+        /* Glassmorphism Card */
+        .glass-card {
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Neon Glow Text */
+        .text-glow {
+            text-shadow: 0 0 15px rgba(34, 211, 238, 0.5);
+        }
+
+        /* Animation Classes */
+        .fade-in { animation: fadeIn 0.5s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .loader {
+            width: 48px; height: 48px;
+            border: 5px solid #22d3ee;
+            border-bottom-color: transparent;
+            border-radius: 50%;
+            display: inline-block;
+            box-sizing: border-box;
+            animation: rotation 1s linear infinite;
+        }
+        @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4 relative">
+
+    <div class="absolute inset-0 bg-grid z-0 pointer-events-none"></div>
+    <div class="blob w-96 h-96 bg-cyan-600/20 top-0 left-0"></div>
+    <div class="blob w-96 h-96 bg-blue-600/20 bottom-0 right-0 animation-delay-2000"></div>
+
+    <div class="w-full max-w-md z-10 relative">
+        
+        <div class="text-center mb-8 fade-in">
+            <div class="relative w-24 h-24 mx-auto mb-4 group">
+                <div class="absolute inset-0 bg-cyan-500 rounded-full blur opacity-40 group-hover:opacity-60 transition-opacity"></div>
+                <img src="Kaizen.jpg" 
+                     alt="Profile Dev" 
+                     class="relative w-full h-full object-cover rounded-full border-2 border-cyan-500/50 shadow-2xl">
+                <div class="absolute bottom-1 right-1 w-5 h-5 bg-green-500 rounded-full border-4 border-black z-10" title="Online"></div>
+            </div>
+
+            <h1 class="text-4xl font-extrabold tracking-tighter text-white">Kaizen <span class="text-cyan-400 text-glow">PAY</span></h1>
+            <p class="text-zinc-500 text-xs mt-1 uppercase tracking-[0.3em] mb-4">Official Owner/Dev</p>
+
+            <div class="flex items-center justify-center gap-3">
+                <a href="https://discord.gg/LINK_DISCORD_KAMU" target="_blank" class="w-10 h-10 rounded-full bg-[#5865F2]/10 border border-[#5865F2]/20 flex items-center justify-center text-[#5865F2] hover:bg-[#5865F2] hover:text-white transition-all duration-300 hover:scale-110">
+                    <i class="fab fa-discord"></i>
+                </a>
+                <a href="https://tiktok.com/@USERNAME_TIKTOK" target="_blank" class="w-10 h-10 rounded-full bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-500 hover:bg-gradient-to-br hover:from-cyan-400 hover:to-pink-500 hover:text-white hover:border-transparent transition-all duration-300 hover:scale-110">
+                    <i class="fab fa-tiktok"></i>
+                </a>
+                <a href="https://wa.me/628XXXXXXXXXX" target="_blank" class="w-10 h-10 rounded-full bg-green-500/10 border border-green-500/20 flex items-center justify-center text-green-500 hover:bg-green-500 hover:text-white transition-all duration-300 hover:scale-110">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="glass-card rounded-[32px] p-6 relative overflow-hidden transition-all duration-500" id="main-container">
+            
+            <div id="view-amount" class="fade-in">
+                <div class="bg-black/30 rounded-2xl p-4 border border-zinc-800 mb-6">
+                    <label class="text-[10px] text-zinc-500 font-bold uppercase block mb-2">Masukkan Nominal (IDR)</label>
+                    <div class="relative">
+                        <span class="absolute left-0 top-1/2 -translate-y-1/2 text-xl font-bold text-zinc-600">Rp</span>
+                        <input type="number" id="input-amount" class="w-full bg-transparent border-none p-0 pl-10 text-3xl font-bold text-white focus:ring-0 outline-none placeholder-zinc-800" placeholder="0">
+                    </div>
+                </div>
+                
+                <label class="text-xs text-zinc-500 font-bold uppercase ml-1 mb-3 block">Metode Pembayaran</label>
+                <div class="space-y-3">
+                    <button onclick="selectMethod('DANA')" class="w-full group flex items-center justify-between p-4 bg-zinc-900/40 border border-zinc-800 rounded-2xl hover:bg-zinc-800/60 hover:border-blue-500/50 transition-all">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform"><i class="fas fa-wallet text-xl"></i></div>
+                            <div class="text-left">
+                                <p class="font-bold text-white">DANA</p>
+                                <p class="text-[10px] text-zinc-500">QRIS / Nomor</p>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right text-zinc-700 group-hover:text-blue-500 transition-colors"></i>
+                    </button>
+
+                    <button onclick="selectMethod('GOPAY')" class="w-full group flex items-center justify-between p-4 bg-zinc-900/40 border border-zinc-800 rounded-2xl hover:bg-zinc-800/60 hover:border-green-500/50 transition-all">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center text-green-400 group-hover:scale-110 transition-transform"><i class="fab fa-google-wallet text-xl"></i></div>
+                            <div class="text-left">
+                                <p class="font-bold text-white">GOPAY</p>
+                                <p class="text-[10px] text-zinc-500">QRIS / Nomor</p>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right text-zinc-700 group-hover:text-green-500 transition-colors"></i>
+                    </button>
+
+                    <button onclick="selectMethod('SEABANK')" class="w-full group flex items-center justify-between p-4 bg-zinc-900/40 border border-zinc-800 rounded-2xl hover:bg-zinc-800/60 hover:border-orange-500/50 transition-all">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-orange-500/10 flex items-center justify-center text-orange-400 group-hover:scale-110 transition-transform"><i class="fas fa-building-columns text-xl"></i></div>
+                            <div class="text-left">
+                                <p class="font-bold text-white">SEABANK</p>
+                                <p class="text-[10px] text-zinc-500">Transfer Bank</p>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right text-zinc-700 group-hover:text-orange-500 transition-colors"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div id="view-checkout" class="hidden fade-in">
+                <div class="flex items-center justify-between mb-6 border-b border-white/5 pb-4">
+                    <button onclick="resetView()" class="text-xs text-zinc-500 hover:text-white flex items-center gap-2 py-2 pr-4"><i class="fas fa-arrow-left"></i> Kembali</button>
+                    <span class="text-[10px] font-bold bg-cyan-500/10 text-cyan-400 px-3 py-1 rounded-full border border-cyan-500/20 animate-pulse">Menunggu Pembayaran</span>
+                </div>
+
+                <div class="text-center mb-6">
+                    <p class="text-zinc-500 text-[10px] uppercase tracking-widest mb-2">Total yang harus dibayar</p>
+                    <h2 class="text-4xl font-extrabold text-white tracking-tight" id="display-total">Rp 0</h2>
+                </div>
+
+                <div id="payment-details-area" class="bg-black/20 rounded-2xl p-1 border border-zinc-800 mb-6"></div>
+
+                <button onclick="processPayment()" class="w-full py-4 rounded-xl bg-gradient-to-r from-cyan-600 to-blue-600 font-bold text-white shadow-[0_0_20px_rgba(34,211,238,0.2)] hover:shadow-[0_0_30px_rgba(34,211,238,0.4)] hover:scale-[1.02] active:scale-[0.98] transition-all">
+                    <i class="fas fa-check-circle mr-2"></i> KONFIRMASI PEMBAYARAN
+                </button>
+            </div>
+
+            <div id="loading-screen" class="hidden absolute inset-0 bg-[#050505]/90 z-50 flex flex-col items-center justify-center text-center p-6 backdrop-blur-md">
+                <div class="relative mb-6">
+                    <div class="loader"></div>
+                    <div class="absolute inset-0 flex items-center justify-center text-[8px] font-bold text-cyan-500">AP</div>
+                </div>
+                <h3 class="text-lg font-bold text-white mb-2">Memproses Transaksi...</h3>
+                <p class="text-xs text-zinc-400 max-w-[200px]">Mohon tunggu sebentar, sistem sedang mengalihkan ke WhatsApp Admin.</p>
+            </div>
+
+        </div>
+        
+        <div class="text-center mt-6 opacity-30">
+            <p class="text-[10px] text-white">© 2026 Kaizen Pay System v2.0</p>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        //  KONFIGURASI DATA (EDIT DI SINI)
+        // ==========================================
+        const DATA_MERCHANT = {
+            whatsapp_admin: "628XXXXXXXXXX", // Ganti dengan No WA Admin
+            
+            dana: {
+                nomor: "08123456789", 
+                qr_image: "https://via.placeholder.com/300x300.png?text=QR+DANA" // Ganti link gambar QR
+            },
+            
+            gopay: {
+                nomor: "08123456789", 
+                qr_image: "https://via.placeholder.com/300x300.png?text=QR+GOPAY" // Ganti link gambar QR
+            },
+            
+            seabank: {
+                nomor: "901XXXXXXX", 
+                nama: "Kaizen"
+            }
+        };
+
+        // ==========================================
+        //  LOGIKA SYSTEM
+        // ==========================================
+        let currentAmount = 0;
+        let currentMethodName = "";
+
+        function selectMethod(method) {
+            const amountInput = document.getElementById('input-amount').value;
+            if (!amountInput || amountInput < 1000) {
+                alert("Minimal pembayaran Rp 1.000 ya!");
+                return;
+            }
+
+            currentAmount = amountInput;
+            currentMethodName = method;
+            
+            // Animasi transisi
+            document.getElementById('view-amount').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('view-amount').classList.add('hidden');
+                document.getElementById('view-checkout').classList.remove('hidden');
+                document.getElementById('view-amount').style.opacity = '1';
+            }, 300);
+
+            document.getElementById('display-total').innerText = "Rp " + parseInt(currentAmount).toLocaleString('id-ID');
+            renderPaymentDetails(method);
+        }
+
+        function resetView() {
+            document.getElementById('view-checkout').classList.add('hidden');
+            document.getElementById('view-amount').classList.remove('hidden');
+        }
+
+        function renderPaymentDetails(method) {
+            const container = document.getElementById('payment-details-area');
+            let htmlContent = '';
+
+            if (method === 'SEABANK') {
+                htmlContent = `
+                    <div class="p-6 text-center">
+                        <div class="w-16 h-16 mx-auto mb-4 bg-orange-500/10 rounded-2xl flex items-center justify-center border border-orange-500/20 shadow-[0_0_15px_rgba(249,115,22,0.1)]">
+                            <i class="fas fa-building-columns text-3xl text-orange-500"></i>
+                        </div>
+                        
+                        <p class="text-zinc-500 text-[10px] uppercase mb-1 tracking-widest">Nomor Rekening</p>
+                        
+                        <div class="relative flex items-center justify-center gap-3 bg-zinc-900/80 p-4 rounded-xl border border-dashed border-zinc-700 mb-3 group hover:border-orange-500 transition-all cursor-pointer" onclick="copyToClipboard('${DATA_MERCHANT.seabank.nomor}')">
+                            <span class="font-mono text-xl font-bold text-orange-400 tracking-wider">${DATA_MERCHANT.seabank.nomor}</span>
+                            <i class="fas fa-copy text-zinc-600 group-hover:text-white"></i>
+                        </div>
+                        
+                        <div class="inline-block px-3 py-1 rounded-full bg-zinc-800/50 border border-zinc-700">
+                            <p class="text-xs text-zinc-400">a.n <span class="font-bold text-white">${DATA_MERCHANT.seabank.nama}</span></p>
+                        </div>
+                    </div>
+                `;
+            } else {
+                const data = method === 'DANA' ? DATA_MERCHANT.dana : DATA_MERCHANT.gopay;
+                const color = method === 'DANA' ? 'blue' : 'green';
+                const iconClass = method === 'DANA' ? 'fas fa-wallet' : 'fab fa-google-wallet';
+                
+                htmlContent = `
+                    <div class="flex p-1 bg-zinc-900/50 rounded-t-xl mb-4 border-b border-white/5">
+                        <button onclick="switchTab('qr')" id="btn-qr" class="flex-1 py-2 text-[10px] font-bold rounded-lg bg-zinc-800 text-white shadow transition-all">SCAN QRIS</button>
+                        <button onclick="switchTab('tf')" id="btn-tf" class="flex-1 py-2 text-[10px] font-bold rounded-lg text-zinc-500 hover:text-white transition-all">TRANSFER MANUAL</button>
+                    </div>
+
+                    <div id="tab-qr" class="p-4 text-center pb-6 fade-in">
+                        <div class="bg-white p-3 rounded-xl inline-block shadow-lg mb-4 relative group">
+                            <img src="${data.qr_image}" class="w-40 h-40 object-cover rounded-lg" onerror="this.src='https://placehold.co/200x200?text=QR+Error'">
+                        </div>
+                        <p class="text-[10px] text-zinc-500 uppercase">Scan menggunakan aplikasi ${method}</p>
+                    </div>
+
+                    <div id="tab-tf" class="hidden p-6 text-center fade-in">
+                        <div class="w-12 h-12 mx-auto mb-3 rounded-full bg-${color}-500/10 flex items-center justify-center text-${color}-400">
+                            <i class="${iconClass} text-xl"></i>
+                        </div>
+                        <p class="text-zinc-500 text-[10px] uppercase mb-2">Nomor ${method}</p>
+                        <div class="flex items-center justify-center gap-3 bg-zinc-900/80 p-4 rounded-xl border border-dashed border-zinc-700 mb-2 hover:border-${color}-500 transition-all cursor-pointer" onclick="copyToClipboard('${data.nomor}')">
+                            <span class="font-mono text-xl font-bold text-${color}-400">${data.nomor}</span>
+                            <i class="fas fa-copy text-zinc-600"></i>
+                        </div>
+                    </div>
+                `;
+            }
+            container.innerHTML = htmlContent;
+        }
+
+        window.switchTab = function(tab) {
+            if(tab === 'qr') {
+                document.getElementById('tab-qr').classList.remove('hidden');
+                document.getElementById('tab-tf').classList.add('hidden');
+                document.getElementById('btn-qr').classList.add('bg-zinc-800', 'text-white', 'shadow');
+                document.getElementById('btn-qr').classList.remove('text-zinc-500');
+                document.getElementById('btn-tf').classList.remove('bg-zinc-800', 'text-white', 'shadow');
+                document.getElementById('btn-tf').classList.add('text-zinc-500');
+            } else {
+                document.getElementById('tab-qr').classList.add('hidden');
+                document.getElementById('tab-tf').classList.remove('hidden');
+                document.getElementById('btn-tf').classList.add('bg-zinc-800', 'text-white', 'shadow');
+                document.getElementById('btn-tf').classList.remove('text-zinc-500');
+                document.getElementById('btn-qr').classList.remove('bg-zinc-800', 'text-white', 'shadow');
+                document.getElementById('btn-qr').classList.add('text-zinc-500');
+            }
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text);
+            // Simple toast notification replacement
+            const btn = event.currentTarget;
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = '<span class="text-xs text-white font-bold">Tersalin!</span>';
+            setTimeout(() => {
+                btn.innerHTML = originalHTML;
+            }, 1000);
+        }
+
+        function processPayment() {
+            const loader = document.getElementById('loading-screen');
+            loader.classList.remove('hidden');
+
+            setTimeout(() => {
+                loader.classList.add('hidden');
+                const message = `*KONFIRMASI PEMBAYARAN*%0A` +
+                                `--------------------------------%0A` +
+                                `Kepada: *Kaizen*%0A` +
+                                `Saya sudah melakukan pembayaran:%0A%0A` +
+                                `💰 Nominal: *Rp ${parseInt(currentAmount).toLocaleString('id-ID')}*%0A` +
+                                `💳 Via: *${currentMethodName}*%0A` +
+                                `📅 Tanggal: ${new Date().toLocaleDateString('id-ID')}%0A` +
+                                `--------------------------------%0A` +
+                                `Mohon segera diproses. Terima kasih!`;
+                
+                window.location.href = `https://wa.me/${DATA_MERCHANT.whatsapp_admin}?text=${message}`;
+            }, 2000);
+        }
+    </script>
+</body>
+  </html>
