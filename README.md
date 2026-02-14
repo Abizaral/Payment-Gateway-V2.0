@@ -84,10 +84,7 @@ Ingin menggunakan template ini untuk bisnis kamu sendiri? Caranya sangat mudah!
 
 Jika ada pertanyaan atau ingin request fitur, silakan hubungi saya:
 
-<a href="https://discord.gg/LINK_KAMU">
-  <img src="https://img.shields.io/badge/Discord-Join_Server-5865F2?style=for-the-badge&logo=discord&logoColor=white">
-</a>
-<a href="https://tiktok.com/@USERNAME_KAMU">
+<a href="https://tiktok.com/@kaizenn.zz">
   <img src="https://img.shields.io/badge/TikTok-Follow_Me-000000?style=for-the-badge&logo=tiktok&logoColor=white">
 </a>
 
